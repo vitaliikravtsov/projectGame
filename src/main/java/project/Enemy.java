@@ -3,24 +3,41 @@ package project;
 public class Enemy extends Creature{
     String[] enemyName = {"Альп", "Брукса", "Гаркаин", "Фледер", "Голем", "Ифрит", "Черепоглав", "Пиявка", "Риггер", "Кикимора", "Химера"};
 
-    public void createEnemy(int coordinateX, int coordinateY) {
-        this.health = 10;
-        this.attack = 5;
-        int counter = -1;
-        for (int x = -1; x <= 1; x++) {
-            for (int y = -1; y <= 1; y++) {
-                counter++;
-                if(x == 0 && y == 0) {
+    private int minCoordinateX = -1;
+    private int maxCoordinateX = 1;
+    private int minCoordinateY = -1;
+    private int maxCoordinateY = 1;
+
+    int mobCount = 0;
+
+    boolean anyEnemyAlive = false;
+
+    EnemyMob[] mobList = new EnemyMob[8];
+
+    public EnemyMob[] createMobList() {
+        for (int x = minCoordinateX; x <= maxCoordinateX ; x++) {
+            for (int y = minCoordinateY; y <= maxCoordinateY; y++) {
+                if(x==0 && y==0) {
                     continue;
-                } else {
-                    if (coordinateX == x && coordinateY == y) {
-                        System.out.println("x: " + x + " y " + y);
-                        this.name = enemyName[counter];
-                    }
                 }
+                mobList[mobCount] = new EnemyMob(enemyName[mobCount], x, y);
+                mobList[mobCount].setHealth(50);
+                mobList[mobCount].setAttack(20);
+                mobCount++;
             }
         }
-        System.out.println("Вы встретили врага " + this.name + ". его здоровье " + this.health + ". Атака " + this.attack);
+        return mobList;
     }
 
+    public boolean getAliveEnemy() {
+        for (EnemyMob enemy: mobList) {
+            if(enemy.getIsAlive()) {
+                System.out.println(enemy.getCoordinateX() + " " + enemy.getCoordinateY());
+                anyEnemyAlive = true;
+            } else {
+                anyEnemyAlive = false;
+            }
+        }
+        return anyEnemyAlive;
+    }
 }

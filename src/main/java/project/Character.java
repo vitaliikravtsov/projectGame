@@ -34,13 +34,7 @@ public class Character extends Creature{
         return character;
     }
 
-    public void move() {
-        System.out.println("Выерите направление движения: 1 - вперед, 2 - влево, 3 - вправо, 4 - назад");
-        int direction = scanner.nextInt();
-//        if((direction == 1 && this.getCoordinateY() == 2) || (direction == 2 && this.getCoordinateY() == 2) || (this.getCoordinateX() == 2 && this.getCoordinateY() == 2)){
-//            System.out.println("Выберите другое направление");
-//            direction = scanner.nextInt();
-//        }
+    public void move(int direction) {
         switch (direction) {
             case 1:
                 this.setCoordinateY(this.getCoordinateY()+1);

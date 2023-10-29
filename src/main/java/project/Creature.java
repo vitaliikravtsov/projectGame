@@ -6,6 +6,7 @@ public class Creature {
     protected int attack;
     protected int coordinateX;
     protected int coordinateY;
+    protected boolean isAlive = true;
 
     public Creature() {
         this.name = "";
@@ -31,9 +32,29 @@ public class Creature {
         this.coordinateY = coordinateY;
     }
 
-    public boolean isAlive() {
-        return this.health > 0;
+    public int getHealth() {
+        return health;
     }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getAttack() {
+        return attack;
+    }
+
+    public void setAttack(int attack) {
+        this.attack = attack;
+    }
+
+    public boolean getIsAlive() {
+        return this.getHealth() > 0;
+    }
+
+//    public void setIsAlive(boolean alive) {
+//        this.isAlive = alive;
+//    }
 
     public void greetingCreature() {
         System.out.println(this.name + " " + this.health + " " + this.attack + "position " + this.coordinateX + " " + this.coordinateY);
