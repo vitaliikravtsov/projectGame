@@ -2,53 +2,78 @@ package project;
 
 import java.util.Scanner;
 
-public class Character extends Creature{
-    Scanner scanner = new Scanner(System.in);
+public abstract class Character extends CharacterManager{
+    protected CharacterType characterType;
+    protected int health;
+    protected int attackPower;
+    protected int armor;
+    protected static int nextId = 1;
+    protected final int id;
+    public int coordinateX;
+    public int coordinateY;
 
-    int charLevel;
-    int charExperience;
-
-    public Character() {
-
-        this.charLevel = 0;
-        this.charExperience = 0;
+    public Character(CharacterType characterType) {
+        this.characterType = characterType;
+        this.id = nextId++;
     }
 
-    public Character createChar (int characterType) {
-        Character character = null;
-        switch (characterType) {
-            case 1:
-                System.out.println(characterType);
-                character = new CharacterMag(characterType);
-                break;
-            case 2:
-                System.out.println(characterType);
-                character = new CharacterWarrior(characterType);
-                break;
-            case 3:
-                System.out.println(characterType);
-                character = new CharacterArcher(characterType);
-                break;
-        }
+    public abstract void superPower();
 
-        return character;
+    public int getHealth() {
+        return health;
     }
 
-    public void move(int direction) {
-        switch (direction) {
-            case 1:
-                this.setCoordinateY(this.getCoordinateY()+1);
-                break;
-            case 2:
-                this.setCoordinateX(this.getCoordinateX()-1);
-                break;
-            case 3:
-                this.setCoordinateX(this.getCoordinateX()+1);
-                break;
-            case 4:
-                this.setCoordinateY(this.getCoordinateY()-1);
-                break;
-        }
+    public void setHealth(int health) {
+        this.health = health;
     }
 
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public void setAttackPower(int attackPower) {
+        this.attackPower = attackPower;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public int getArmor() {
+        return armor;
+    }
+
+    public void setArmor(int armor) {
+        this.armor = armor;
+    }
+
+    public enum CharacterType {
+        MAG, WAR, ARCHER;
+    }
+
+    public int getCoordinateX() {
+        return coordinateX;
+    }
+
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
+    }
+
+    public int getCoordinateY() {
+        return coordinateY;
+    }
+
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
+    }
+
+    @Override
+    public String toString() {
+        return "Character{" +
+                "characterType=" + characterType +
+                ", health=" + health +
+                ", attackPower=" + attackPower +
+                ", id=" + id +
+                '}';
+    }
 }

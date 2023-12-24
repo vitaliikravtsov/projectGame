@@ -1,43 +1,67 @@
 package project;
 
-public class Enemy extends Creature{
-    String[] enemyName = {"Альп", "Брукса", "Гаркаин", "Фледер", "Голем", "Ифрит", "Черепоглав", "Пиявка", "Риггер", "Кикимора", "Химера"};
+public class Enemy {
+    protected int health;
+    protected final int attackPower;
+    protected int coordinateX;
+    protected int coordinateY;
+    protected int nextId = 1;
+    protected int id;
 
-    private int minCoordinateX = -1;
-    private int maxCoordinateX = 1;
-    private int minCoordinateY = -1;
-    private int maxCoordinateY = 1;
+    public Enemy(int coordinateX, int coordinateY) {
+        this.health = 50;
+        this.attackPower = 10;
+        this.coordinateX = coordinateX;
+        this.coordinateY = coordinateY;
+        this.id = nextId++;
 
-    int mobCount = 0;
-
-    boolean anyEnemyAlive = false;
-
-    EnemyMob[] mobList = new EnemyMob[8];
-
-    public EnemyMob[] createMobList() {
-        for (int x = minCoordinateX; x <= maxCoordinateX ; x++) {
-            for (int y = minCoordinateY; y <= maxCoordinateY; y++) {
-                if(x==0 && y==0) {
-                    continue;
-                }
-                mobList[mobCount] = new EnemyMob(enemyName[mobCount], x, y);
-                mobList[mobCount].setHealth(50);
-                mobList[mobCount].setAttack(20);
-                mobCount++;
-            }
-        }
-        return mobList;
     }
 
-    public boolean getAliveEnemy() {
-        for (EnemyMob enemy: mobList) {
-            if(enemy.getIsAlive()) {
-                System.out.println(enemy.getCoordinateX() + " " + enemy.getCoordinateY());
-                anyEnemyAlive = true;
-            } else {
-                anyEnemyAlive = false;
-            }
-        }
-        return anyEnemyAlive;
+    public int getHealth() {
+        return health;
+    }
+
+    public void setHealth(int health) {
+        this.health = health;
+    }
+
+    public int getAttackPower() {
+        return attackPower;
+    }
+
+    public int getCoordinateX() {
+        return coordinateX;
+    }
+
+    public void setCoordinateX(int coordinateX) {
+        this.coordinateX = coordinateX;
+    }
+
+    public int getCoordinateY() {
+        return coordinateY;
+    }
+
+    public void setCoordinateY(int coordinateY) {
+        this.coordinateY = coordinateY;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "Enemy{" +
+                "health=" + health +
+                ", attackPower=" + attackPower +
+                ", coordinateX=" + coordinateX +
+                ", coordinateY=" + coordinateY +
+                ", nextId=" + nextId +
+                ", id=" + id +
+                '}';
     }
 }
