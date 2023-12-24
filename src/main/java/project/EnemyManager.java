@@ -5,8 +5,8 @@ import java.util.ArrayList;
 public class EnemyManager {
     ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public void createEnemy() {
-        enemies.add(new Enemy(1,1));
+    public void createEnemy(int x, int y) {
+        enemies.add(new Enemy(x,y));
     }
 
     public Enemy findEnemyById(int id) {

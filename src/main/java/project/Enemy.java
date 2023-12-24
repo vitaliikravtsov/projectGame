@@ -5,8 +5,8 @@ public class Enemy {
     protected final int attackPower;
     protected int coordinateX;
     protected int coordinateY;
-    protected int nextId = 1;
-    protected int id;
+    protected static int nextId = 1;
+    protected final int id;
 
     public Enemy(int coordinateX, int coordinateY) {
         this.health = 50;
@@ -45,13 +45,7 @@ public class Enemy {
         this.coordinateY = coordinateY;
     }
 
-    public int getId() {
-        return id;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
@@ -60,8 +54,11 @@ public class Enemy {
                 ", attackPower=" + attackPower +
                 ", coordinateX=" + coordinateX +
                 ", coordinateY=" + coordinateY +
-                ", nextId=" + nextId +
                 ", id=" + id +
                 '}';
+    }
+
+    public int getId() {
+        return id;
     }
 }
