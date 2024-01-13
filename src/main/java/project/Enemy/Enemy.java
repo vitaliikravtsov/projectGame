@@ -1,4 +1,4 @@
-package project;
+package project.Enemy;
 
 public class Enemy {
     protected int health;
@@ -16,6 +16,7 @@ public class Enemy {
         this.id = nextId++;
 
     }
+
 
     public int getHealth() {
         return health;

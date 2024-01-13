@@ -1,4 +1,4 @@
-package project;
+package project.Character;
 
 public class CharacterWar extends Character{
     public String charName;
@@ -10,8 +10,4 @@ public class CharacterWar extends Character{
         this.armor = 5;
     }
 
-    @Override
-    public void superPower() {
-
-    }
 }

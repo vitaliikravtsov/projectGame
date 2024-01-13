@@ -1,26 +1,47 @@
 package project;
 
+import project.Character.Character;
+import project.Character.CharacterManager;
+import project.Enemy.Enemy;
+import project.Enemy.EnemyManager;
+
+import java.util.ArrayList;
+
 public class Location {
 
-    public CharacterManager characterManager;
-    public EnemyManager enemyManager;
+    public final int maxCoordinateX;
+    public final int maxCoordinateY;
+    public final String locationName;
 
-    public Location(CharacterManager characterManager, EnemyManager enemyManager) {
-        this.characterManager = characterManager;
-        this.enemyManager = enemyManager;
+    public Location(int maxCoordinateX, int maxCoordinateY, String locationName) {
+        this.maxCoordinateX = maxCoordinateX;
+        this.maxCoordinateY = maxCoordinateY;
+        this.locationName = locationName;
     }
 
-    public boolean isThereEnemy(Character characterById) {
-        for (Enemy enemy : enemyManager.getEnemies()) {
-            if(enemy.getCoordinateX() == characterById.getCoordinateX() && enemy.getCoordinateY() == characterById.getCoordinateY()) {
+    public boolean checkIfMeetEnemies(int charX, int charY, int enemyX, int enemyY) {
+        return (charX == enemyX) && charY == enemyY;
+    }
+
+    public int getMaxCoordinateX() {
+        return maxCoordinateX;
+    }
+
+    public int getMaxCoordinateY() {
+        return maxCoordinateY;
+    }
+
+    public String getLocationName() {
+        return locationName;
+    }
+
+    public boolean checkIfMeetEnemies(int coordinateX, int coordinateY, ArrayList<Enemy> enemies) {
+        for (Enemy enemy : enemies) {
+            if ((enemy.getCoordinateX() == coordinateX) && enemy.getCoordinateY() == coordinateY) {
+                Logger.log("Enemy!!!! aaaaaaaaa");
                 return true;
             }
         }
-
-        System.out.println(enemyManager.getEnemies());
-
-        System.out.println(characterManager.getCharacterById(1).getCoordinateX());
         return false;
     }
-
 }

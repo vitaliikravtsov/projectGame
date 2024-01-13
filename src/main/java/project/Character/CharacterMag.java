@@ -1,4 +1,7 @@
-package project;
+package project.Character;
+
+import project.Character.Baggage.BaggageStore;
+import project.Location;
 
 public class CharacterMag extends Character{
     public String charName;
@@ -9,11 +12,6 @@ public class CharacterMag extends Character{
         this.health = 70;
         this.attackPower = 20;
         this.armor = 2;
-    }
-
-    @Override
-    public void superPower() {
-
     }
 
 }
