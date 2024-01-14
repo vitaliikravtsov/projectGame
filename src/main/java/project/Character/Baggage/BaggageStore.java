@@ -20,7 +20,6 @@ public class BaggageStore {
     }
 
     public ArrayList<BaggageItem> getBaggageStore() {
-        System.out.println(baggageItems);
         return baggageItems;
     }
 

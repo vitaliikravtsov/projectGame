@@ -1,71 +1,97 @@
 package project;
-
-import project.Character.Baggage.BaggageStore;
+import netscape.javascript.JSObject;
 import project.Character.Character;
 import project.Character.CharacterManager;
 import project.Enemy.Enemy;
 import project.Enemy.EnemyManager;
 
-import javax.security.auth.login.LoginException;
+import java.sql.SQLOutput;
 import java.util.Scanner;
+
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import org.json.JSONObject;
+
 
 public class GameManager {
     public static boolean isGameEnded = false;
-
+    public static Logger logger = Logger.getLoggerInstance();
+    public static int userID = 1;
 
     public static void startGame() {
+        Scanner scanner = new Scanner(System.in);
+
 //        Define location
         Location location = new Location(4,4,"World");
-        Logger.log("Location is " + location.getLocationName() + "." + " Max x is " + location.getMaxCoordinateX() + " , max Y is " + location.getMaxCoordinateY());
+        logger.log("Location is " + location.getLocationName() + "." + " Max x is " + location.getMaxCoordinateX() + " , max Y is " + location.getMaxCoordinateY());
 
-//        Define character
+//        Define type of character
         CharacterManager characterManager = new CharacterManager();
-        characterManager.createChar();
-        Character character = characterManager.getCharacterById(1);
-        Logger.log("You play for " + character);
+        final CharacterManager.CharacterType characterType = characterManager.chooseCharacterType();
+        logger.log("Ok, you play for " + characterType);
 
+//        Create character
+        Character character = characterManager.createChar(characterType);
+        character.getInfo();
+
+//        Create enemies
         EnemyManager enemyManager = new EnemyManager();
-        enemyManager.createEnemy(0,1);
-        enemyManager.createEnemy(0,2);
-        enemyManager.createEnemy(0,3);
-        enemyManager.createEnemy(0,4);
-        enemyManager.createEnemy(1,4);
-        enemyManager.createEnemy(2,4);
-        enemyManager.createEnemy(3,4);
-        enemyManager.createEnemy(4,4);
+        enemyManager.createEnemy();
 
-//        Explore world
-        while (!enemyManager.getEnemies().isEmpty() && !isGameEnded) {
-            System.out.println("Your location now is " + character.getCoordinateX() + " " + character.getCoordinateY());
-            character.move(location.getMaxCoordinateX(), location.getMaxCoordinateY());
-            final Enemy findedEnemy = enemyManager.findEnemyByCoordinates(character.getCoordinateX(), character.getCoordinateY());
-            if (findedEnemy != null) {
-                Scanner scanner = new Scanner(System.in);
-                Logger.log("Вы встретили врага. Что делаем? 1 - драться, 2 - сдаться.");
-                int action = scanner.nextInt();
-                switch (action) {
-                    case 1 -> {
-                        while (findedEnemy.getHealth() > 0) {
-                            character.fight(character, findedEnemy);
-                        }
-                        if(character.getHealth() <= 0) {
-                            Logger.log("You`v been killed. It`s over");
-                            characterManager.remove(character);
-                            isGameEnded = true;
-                        } else if (findedEnemy.getHealth() <= 0) {
-                            Logger.log("Good, you killed the enemy, move on");
-                            enemyManager.remove(findedEnemy);
-                            enemyManager.dropLoot(character);
+        while (!isGameEnded) {
+//        Define an action
+            logger.log("What would you like to do?");
+            logger.log("1 - explore the " + location.getLocationName());
+            logger.log("2 - Check baggage");
+            logger.log("3 - Check my properties");
+            logger.log("4 - Exit");
+            int action = scanner.nextInt();
+            switch (action) {
+                case 1 -> {
+                    character.move(location.getMaxCoordinateX(), location.getMaxCoordinateY());
+                    logger.log("Your location now is " + character.getCoordinateX() + " " + character.getCoordinateY());
+                    if (location.checkIfMeetEnemies(character.getCoordinateX(), character.getCoordinateY(), enemyManager.getEnemies())) {
+                        Enemy findedEnemy = enemyManager.findEnemyByCoordinates(character.getCoordinateX(), character.getCoordinateY());
+                        logger.log("Are you going to fight?");
+                        logger.log("1 - yes");
+                        logger.log("2 - no");
+                        int isFight = scanner.nextInt();
+                        switch (isFight) {
+                            case 1 -> {
+                                while (findedEnemy.getHealth() > 0) {
+                                    character.fight(character, findedEnemy);
+                                }
+                                if (character.getHealth() <= 0) {
+                                    logger.log("You`v been killed. It`s over");
+                                    characterManager.remove(character);
+                                    isGameEnded = true;
+                                } else if (findedEnemy.getHealth() <= 0) {
+                                    logger.log("Good, you killed the enemy, move on");
+                                    enemyManager.remove(findedEnemy);
+                                    enemyManager.dropLoot(character);
+                                }
+                            }
+                            case 2 -> {
+                                logger.log("трус и слабак");
+                                isGameEnded = true;
+                            }
                         }
                     }
-                    case 2 -> {
-                        Logger.log("трус и слабак");
-                        isGameEnded = true;
+                    else {
+                        logger.log("It`s clear, move on");
                     }
                 }
-            } else {
-                Logger.log("It`s clear, move on");
+                case 2 -> character.exploreBaggageStore();
+                case 3 -> character.getInfo();
+                case 4 -> isGameEnded = true;
             }
         }
+        logger.log("Bye.");
     }
 }

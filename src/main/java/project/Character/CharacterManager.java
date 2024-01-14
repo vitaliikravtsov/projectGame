@@ -1,35 +1,56 @@
 package project.Character;
 
-import project.Character.Baggage.BaggageStore;
-import project.Enemy.Enemy;
-import project.Location;
+import lombok.Data;
 import project.Logger;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-
+@Data
 public class CharacterManager {
     public ArrayList<Character> characters = new ArrayList<>();
+    public Logger logger = Logger.getLoggerInstance();
+    public CharacterType characterType;
 
+    public enum CharacterType {
+        MAGE, WAR, ARCHER
+    }
 
-    public void createChar() {
+    public CharacterType chooseCharacterType() {
         Scanner scanner = new Scanner(System.in);
-        Logger.log("Выберите тип героя. 1 - Маг, 2 - Воин, 3 - Лучник.");
-        int characterType = scanner.nextInt();
-        Character character = null;
-        switch (characterType) {
+        logger.log("Выберите тип героя:");
+        logger.log("1 - Маг;");
+        logger.log("2 - Воин;");
+        logger.log("3 - Лучник;");
+        int choice = scanner.nextInt();
+        characterType = null;
+        switch (choice) {
             case 1 -> {
-                character = new CharacterMag(Character.CharacterType.MAG);
+                characterType = CharacterType.MAGE;
             }
             case 2 -> {
-                character = new CharacterWar(Character.CharacterType.WAR);
+                characterType = CharacterType.WAR;
             }
             case 3 -> {
-                character = new CharacterArcher(Character.CharacterType.ARCHER);
+                characterType = CharacterType.ARCHER;
             }
-
+        }
+        return characterType;
+    }
+    public Character createChar(CharacterType characterType) {
+        Character character = null;
+        switch (characterType) {
+            case MAGE -> {
+                character = new CharacterMag();
+            }
+            case WAR -> {
+                character = new CharacterWar();
+            }
+            case ARCHER -> {
+                character = new CharacterArcher();
+            }
         }
         characters.add(character);
+        return character;
     }
 
     public void remove(Character character) {
@@ -44,13 +65,4 @@ public class CharacterManager {
         }
         return null;
     }
-
-    public ArrayList<Character> getCharacters() {
-        return characters;
-    }
-
-    public void setCharacters(ArrayList<Character> characters) {
-        this.characters = characters;
-    }
-
 }

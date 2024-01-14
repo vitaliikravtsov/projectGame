@@ -1,5 +1,10 @@
 package project.Character.Baggage;
 
+import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
+
+@Data
 public class BaggageItem {
     public String type;
     public int additionalHealth;
@@ -23,29 +28,4 @@ public class BaggageItem {
         isSet = true;
     }
 
-    public String getType() {
-        return type;
-    }
-
-    public int getAdditionalHealth() {
-        return additionalHealth;
-    }
-
-    public int getAdditionalAttackPower() {
-        return additionalAttackPower;
-    }
-
-    public int getAdditionalArmor() {
-        return additionalArmor;
-    }
-
-    @Override
-    public String toString() {
-        return "BaggageItem{" +
-                "type='" + type + '\'' +
-                ", additionalHealth=" + additionalHealth +
-                ", additionalAttackPower=" + additionalAttackPower +
-                ", additionalArmor=" + additionalArmor +
-                '}';
-    }
 }

@@ -1,24 +1,24 @@
 package project.Enemy;
 
+import lombok.Data;
+import lombok.Getter;
 import project.Character.Character;
+import project.GameManager;
 
 import java.util.ArrayList;
 import java.util.Random;
 
+@Data
 public class EnemyManager {
-    ArrayList<Enemy> enemies = new ArrayList<>();
+    final ArrayList<Enemy> enemies = new ArrayList<>();
 
-    public void createEnemy(int x, int y) {
-        enemies.add(new Enemy(x,y));
-    }
-
-    public Enemy findEnemyById(int id) {
-        for (Enemy enemy : enemies) {
-            if (enemy.getId() == id) {
-                return enemy;
-            }
-        }
-        return null;
+    public void createEnemy() {
+        enemies.add(new Enemy(0,1));
+        enemies.add(new Enemy(0,2));
+        enemies.add(new Enemy(0,3));
+        enemies.add(new Enemy(0,4));
+        enemies.add(new Enemy(1,0));
+        enemies.add(new Enemy(2,0));
     }
 
     public Enemy findEnemyByCoordinates(int x, int y) {
@@ -30,6 +30,10 @@ public class EnemyManager {
         return null;
     }
 
+    public void isAnyEnemyAlive() {
+        GameManager.isGameEnded = !enemies.isEmpty();
+    }
+
     public void remove(Enemy findedEnemy) {
         enemies.remove(findedEnemy);
     }
@@ -38,13 +42,5 @@ public class EnemyManager {
         Random random = new Random();
         int randomNumber = random.nextInt(4);
         character.addItemToBaggage(randomNumber);
-    }
-
-    public ArrayList<Enemy> getEnemies() {
-        return enemies;
-    }
-
-    public void setEnemies(ArrayList<Enemy> enemies) {
-        this.enemies = enemies;
     }
 }

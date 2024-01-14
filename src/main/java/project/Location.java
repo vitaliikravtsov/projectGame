@@ -1,17 +1,22 @@
 package project;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.extern.java.Log;
 import project.Character.Character;
 import project.Character.CharacterManager;
 import project.Enemy.Enemy;
 import project.Enemy.EnemyManager;
 
 import java.util.ArrayList;
-
+@Getter
+@Setter
 public class Location {
 
     public final int maxCoordinateX;
     public final int maxCoordinateY;
     public final String locationName;
+    public Logger logger = Logger.getLoggerInstance();
 
     public Location(int maxCoordinateX, int maxCoordinateY, String locationName) {
         this.maxCoordinateX = maxCoordinateX;
@@ -23,22 +28,10 @@ public class Location {
         return (charX == enemyX) && charY == enemyY;
     }
 
-    public int getMaxCoordinateX() {
-        return maxCoordinateX;
-    }
-
-    public int getMaxCoordinateY() {
-        return maxCoordinateY;
-    }
-
-    public String getLocationName() {
-        return locationName;
-    }
-
     public boolean checkIfMeetEnemies(int coordinateX, int coordinateY, ArrayList<Enemy> enemies) {
         for (Enemy enemy : enemies) {
             if ((enemy.getCoordinateX() == coordinateX) && enemy.getCoordinateY() == coordinateY) {
-                Logger.log("Enemy!!!! aaaaaaaaa");
+                logger.log("Enemy!!!! aaaaaaaaa");
                 return true;
             }
         }
