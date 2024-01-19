@@ -54,7 +54,21 @@ public class GameManager {
             int action = scanner.nextInt();
             switch (action) {
                 case 1 -> {
-                    character.move(location.getMaxCoordinateX(), location.getMaxCoordinateY());
+                    logger.log("Выберите направлени движения 1 - прямо, 2 - влево, 3 - вправо, 4 - назад");
+                    int direction = scanner.nextInt();
+
+//                  Check available coordinates
+                    if(direction == 1 && character.getCoordinateY() == location.getMaxCoordinateY()) {
+                        logger.log("Нельзя вперед");
+                    } else if (direction == 2 && character.getCoordinateX() == -location.getMaxCoordinateX()) {
+                        logger.log("Нельзя влево");
+                    } else if (direction == 3 && character.getCoordinateX() == location.getMaxCoordinateX()) {
+                        logger.log("Нельзя вправо");
+                    } else if (direction == 4 && character.getCoordinateY() == -location.getMaxCoordinateY()) {
+                        logger.log("Нельзя назад");
+                    } else {
+                        character.move(direction);
+                    }
                     logger.log("Your location now is " + character.getCoordinateX() + " " + character.getCoordinateY());
                     if (location.checkIfMeetEnemies(character.getCoordinateX(), character.getCoordinateY(), enemyManager.getEnemies())) {
                         Enemy findedEnemy = enemyManager.findEnemyByCoordinates(character.getCoordinateX(), character.getCoordinateY());
@@ -79,7 +93,6 @@ public class GameManager {
                             }
                             case 2 -> {
                                 logger.log("трус и слабак");
-                                isGameEnded = true;
                             }
                         }
                     }

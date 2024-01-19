@@ -33,27 +33,27 @@ public abstract class Character {
     }
 
 
-    public void move(int maxX, int maxY) {
+    public void move(int direction) {
             Scanner scanner = new Scanner(System.in);
-            logger.log("Выберите направлени движения 1 - прямо, 2 - влево, 3 - вправо, 4 - назад");
-            int direction = scanner.nextInt();
-
-            if(direction == 1 && this.getCoordinateY() == maxY) {
-                logger.log("Нельзя вперед");
-            } else if (direction == 2 && this.getCoordinateX() == -maxX) {
-                logger.log("Нельзя влево");
-            } else if (direction == 3 && this.getCoordinateX() == maxX) {
-                logger.log("Нельзя вправо");
-            } else if (direction == 4 && this.getCoordinateY() == -maxY) {
-                logger.log("Нельзя назад");
-            } else {
+//            logger.log("Выберите направлени движения 1 - прямо, 2 - влево, 3 - вправо, 4 - назад");
+//            int direction = scanner.nextInt();
+//
+//            if(direction == 1 && this.getCoordinateY() == maxY) {
+//                logger.log("Нельзя вперед");
+//            } else if (direction == 2 && this.getCoordinateX() == -maxX) {
+//                logger.log("Нельзя влево");
+//            } else if (direction == 3 && this.getCoordinateX() == maxX) {
+//                logger.log("Нельзя вправо");
+//            } else if (direction == 4 && this.getCoordinateY() == -maxY) {
+//                logger.log("Нельзя назад");
+//            } else {
                 switch (direction) {
                     case 1 -> this.setCoordinateY(this.getCoordinateY()+1); //straight
                     case 2 -> this.setCoordinateX(this.getCoordinateX()-1); // left
                     case 3 -> this.setCoordinateX(this.getCoordinateX()+1); // right
                     case 4 -> this.setCoordinateY(this.getCoordinateY()-1); // back
                 }
-            }
+
         }
 
         public void fight(Character character, Enemy findedEnemy) {
